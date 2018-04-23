@@ -1,21 +1,25 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button, IconButton } from 'material-ui';
-import MenuIcon from 'material-ui-icons/Menu';
+import { AppBar, Toolbar, Typography } from 'material-ui';
+import { Alarm } from '@material-ui/icons';
+
 export default () => {
-  const style = {
-    display: 'flex',
-    justifyContent: 'space-between'
-  };
   return (
-    <AppBar position="fixed">
-      <Toolbar style={style}>
-        <IconButton color="inherit" aria-label="Menu">
-          <MenuIcon />
-        </IconButton>
+    <AppBar
+    // position="fixed"
+    >
+      <Toolbar
+        style={{
+          display: 'flex',
+          justifyContent: 'space-around'
+        }}
+      >
+        <Alarm />
         <Typography variant="title" color="inherit">
           Pomodoro
         </Typography>
-        <Button color="inherit">Let's be productive!</Button>
+        <Typography variant="subheading" color="inherit">
+          Let's be productive!
+        </Typography>
       </Toolbar>
     </AppBar>
   );

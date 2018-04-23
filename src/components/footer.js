@@ -1,10 +1,6 @@
 import React from 'react';
 import { BottomNavigation, BottomNavigationAction } from 'material-ui';
-import {
-  Restore as RestoreIcon,
-  Favorite as FavoriteIcon,
-  LocationOn as LocationOnIcon
-} from 'material-ui-icons';
+import { Work, FreeBreakfast, Landscape } from '@material-ui/icons';
 export default () => {
   return (
     <BottomNavigation
@@ -12,9 +8,13 @@ export default () => {
       // onChange={this.handleChange}
       showLabels
     >
-      <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-      <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+      <BottomNavigationAction
+        // style={{ height: 50 }}
+        label="Productive"
+        icon={<Work />}
+      />
+      <BottomNavigationAction label="Short-break" icon={<FreeBreakfast />} />
+      <BottomNavigationAction label="Long-break" icon={<Landscape />} />
     </BottomNavigation>
   );
 };

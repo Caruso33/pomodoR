@@ -18,11 +18,10 @@ export default withStyles(styles)(
     constructor(props) {
       super(props);
       this.state = {
-        timings: { work: 25, shortBreak: 5, longBreak: 10 },
         isRunning: false,
-        currentCountdown: 25,
         currentPercentage: 100,
         timerId: 0,
+        reminder: 0,
         tsMin: 0,
         tsSec: 0
       };
@@ -32,13 +31,13 @@ export default withStyles(styles)(
       const addMinutes = (minutes, seconds) =>
         new Date(new Date().getTime() + minutes * 60000 + seconds * 1000);
 
-      const { currentCountdown, tsMin, tsSec } = this.state;
+      const { tsMin, tsSec } = this.state;
+      const { currentCountdown } = this.props;
 
       const workDeadline =
         tsMin === 0 && tsSec === 0
           ? addMinutes(currentCountdown, 0)
           : addMinutes(tsMin, tsSec);
-      const audio = new Audio(Beep);
 
       this.setState({
         timerId: countdown(
@@ -47,24 +46,17 @@ export default withStyles(styles)(
             document.getElementById('countdown').innerHTML = ts.toHTML(
               'strong'
             );
-
             this.progressCountdown(ts);
-
-            if (ts.hours === 0 && ts.minutes === 0 && ts.seconds === 0) {
-              audio.play();
-              // eslint-disable-next-line no-unused-vars
-              const reminder = setInterval(() => audio.play(), 60000);
-            }
+            this.checkIfFinished();
           },
           countdown.HOURS | countdown.MINUTES | countdown.SECONDS
         ),
         isRunning: true
       });
     };
-    componentDidMount() {}
     progressCountdown = ts => {
       const timeLeft = ts.minutes * 60 + ts.seconds;
-      const currentCountdownSeconds = this.state.currentCountdown * 60;
+      const currentCountdownSeconds = this.props.currentCountdown * 60;
 
       this.setState(() => ({
         currentPercentage:
@@ -75,11 +67,23 @@ export default withStyles(styles)(
         tsSec: ts.seconds
       }));
     };
+    checkIfFinished = () => {
+      const { tsMin, tsSec } = this.state;
+
+      if (tsMin === 0 && tsSec === 0) {
+        const audio = new Audio(Beep);
+        audio.play();
+        // this.setState({
+        //   reminder: setInterval(() => audio.play(), 60000)
+        // });
+      }
+    };
 
     handleStartPause = () => {
-      const { timerId, isRunning, tsMin, tsSec } = this.state;
+      const { timerId, isRunning, reminder } = this.state;
 
       window.clearInterval(timerId);
+      window.clearInterval(reminder);
       if (!isRunning) {
         // this.setState({   })
         this.initiateCountdown();
@@ -89,9 +93,10 @@ export default withStyles(styles)(
       });
     };
     handleReset = () => {
-      const { timerId, currentCountdown } = this.state;
+      const { timerId, reminder } = this.state;
 
       window.clearInterval(timerId);
+      window.clearInterval(reminder);
       this.setState(
         {
           isRunning: false,
@@ -101,6 +106,13 @@ export default withStyles(styles)(
         this.initiateCountdown
       );
     };
+    // static getDerivedStateFromProps(nextState, prevState) {
+    //   if (nextState.currentCountdown !== prevState.currentCountdown) {
+    //     return nextState.currentCountdown;
+    //   } else {
+    //     return null;
+    //   }
+    // }
 
     render() {
       const { classes } = this.props;

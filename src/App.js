@@ -26,14 +26,30 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentCountdown: 25,
+      selectedIcon: 0
+    };
+  }
+  handleChangeCountdownTime = (x, y) => {
+    this.setState({
+      currentCountdown: x,
+      selectedIcon: y
+    });
+  };
   render() {
     return (
       <Fragment>
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <Header />
-          <Countdown />
-          <Footer />
+          <Countdown currentCountdown={this.state.currentCountdown} />
+          <Footer
+            selectedIcon={this.state.selectedIcon}
+            handleChangeCountdownTime={this.handleChangeCountdownTime}
+          />
         </MuiThemeProvider>
       </Fragment>
     );

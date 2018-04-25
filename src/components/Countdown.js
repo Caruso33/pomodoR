@@ -18,57 +18,88 @@ export default withStyles(styles)(
     constructor(props) {
       super(props);
       this.state = {
-        workMinutes: 25,
-        shortBreakMinutes: 5,
-        longBreakMinutes: 10,
+        timings: { work: 25, shortBreak: 5, longBreak: 10 },
+        isRunning: false,
         currentCountdown: 25,
-        currentPercentage: 0,
-        timerId: ''
+        currentPercentage: 100,
+        timerId: 0,
+        tsMin: 0,
+        tsSec: 0
       };
     }
-    addMinutes(minutes) {
-      return new Date(new Date().getTime() + minutes * 60000);
-    }
-    componentDidMount() {
-      const workDeadline = this.addMinutes(this.state.workMinutes);
-      // eslint-disable-next-line no-unused-vars
-      const shortBreakDeadline = this.addMinutes(this.state.shortBreakMinutes);
-      // eslint-disable-next-line no-unused-vars
-      const longBreakDeadline = this.addMinutes(this.state.longBreakMinutes);
-      const { currentCountdown } = this.state;
+
+    initiateCountdown = () => {
+      const addMinutes = (minutes, seconds) =>
+        new Date(new Date().getTime() + minutes * 60000 + seconds * 1000);
+
+      const { currentCountdown, tsMin, tsSec } = this.state;
+
+      const workDeadline =
+        tsMin === 0 && tsSec === 0
+          ? addMinutes(currentCountdown, 0)
+          : addMinutes(tsMin, tsSec);
       const audio = new Audio(Beep);
 
-      const timerId = countdown(
-        workDeadline,
-        ts => {
-          document.getElementById('countdown').innerHTML = ts.toHTML('strong');
-
-          this.getProgressPercent(ts);
-
-          if (ts.hours === 0 && ts.minutes === 0 && ts.seconds === 0) {
-            audio.play();
-            // eslint-disable-next-line no-unused-vars
-            const reminder = setInterval(() => audio.play(), 60000);
-          }
-        },
-        countdown.HOURS | countdown.MINUTES | countdown.SECONDS
-      );
-    }
-
-    getProgressPercent = ts =>
-      this.setState(({ currentCountdown }) => ({
-        currentPercentage:
-          (currentCountdown - (currentCountdown - ts.minutes)) /
-          currentCountdown *
-          100
-      }));
-
-    handleStartPause = () => {};
-    handleReset = () => {
       this.setState({
-        timerId: 5
-        // window.clearInterval(timerId)
+        timerId: countdown(
+          workDeadline,
+          ts => {
+            document.getElementById('countdown').innerHTML = ts.toHTML(
+              'strong'
+            );
+
+            this.progressCountdown(ts);
+
+            if (ts.hours === 0 && ts.minutes === 0 && ts.seconds === 0) {
+              audio.play();
+              // eslint-disable-next-line no-unused-vars
+              const reminder = setInterval(() => audio.play(), 60000);
+            }
+          },
+          countdown.HOURS | countdown.MINUTES | countdown.SECONDS
+        ),
+        isRunning: true
       });
+    };
+    componentDidMount() {}
+    progressCountdown = ts => {
+      const timeLeft = ts.minutes * 60 + ts.seconds;
+      const currentCountdownSeconds = this.state.currentCountdown * 60;
+
+      this.setState(() => ({
+        currentPercentage:
+          (currentCountdownSeconds - (currentCountdownSeconds - timeLeft)) /
+          currentCountdownSeconds *
+          100,
+        tsMin: ts.minutes,
+        tsSec: ts.seconds
+      }));
+    };
+
+    handleStartPause = () => {
+      const { timerId, isRunning, tsMin, tsSec } = this.state;
+
+      window.clearInterval(timerId);
+      if (!isRunning) {
+        // this.setState({   })
+        this.initiateCountdown();
+      }
+      this.setState({
+        isRunning: !isRunning
+      });
+    };
+    handleReset = () => {
+      const { timerId, currentCountdown } = this.state;
+
+      window.clearInterval(timerId);
+      this.setState(
+        {
+          isRunning: false,
+          tsMin: 0,
+          tsSec: 0
+        },
+        this.initiateCountdown
+      );
     };
 
     render() {
@@ -78,9 +109,9 @@ export default withStyles(styles)(
           <CircularProgress
             height={50}
             size={150}
-            color="primary"
+            color="secondary"
             variant="static"
-            thickness={3}
+            thickness={2}
             value={this.state.currentPercentage}
           />
           <Typography

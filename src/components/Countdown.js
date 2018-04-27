@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 import Beep from '../assets/sound.wav';
 import { Paper, Button, Typography } from 'material-ui';
 import { CircularProgress } from 'material-ui/Progress';
+import TextField from 'material-ui/TextField';
+import { InputAdornment } from 'material-ui/Input';
 import { withStyles } from 'material-ui/styles';
-import { Autorenew, PlayArrow, Pause } from '@material-ui/icons';
+import {
+  Autorenew,
+  PlayArrow,
+  Pause,
+  Timelapse,
+  Done
+} from '@material-ui/icons';
 
 const countdown = require('countdown');
 
@@ -23,7 +31,8 @@ export default withStyles(styles)(
         timerId: 0,
         reminder: 0,
         tsMin: 0,
-        tsSec: 0
+        tsSec: 0,
+        manualTime: 0
       };
     }
 
@@ -58,7 +67,7 @@ export default withStyles(styles)(
       const timeLeft = ts.minutes * 60 + ts.seconds;
       const currentCountdownSeconds = this.props.currentCountdown * 60;
 
-      this.setState(() => ({
+      this.setState(({ currentPercentage }) => ({
         currentPercentage:
           (currentCountdownSeconds - (currentCountdownSeconds - timeLeft)) /
           currentCountdownSeconds *
@@ -85,7 +94,6 @@ export default withStyles(styles)(
       window.clearInterval(timerId);
       window.clearInterval(reminder);
       if (!isRunning) {
-        // this.setState({   })
         this.initiateCountdown();
       }
       this.setState({
@@ -114,13 +122,13 @@ export default withStyles(styles)(
     }
 
     render() {
-      const { classes } = this.props;
+      const { classes, handleChangeTimeManually } = this.props;
       return (
         <Paper
           style={{
-            height: '80vh',
             marginTop: 70,
             paddingTop: 84,
+            paddingBottom: 20,
             textAlign: 'center'
           }}
         >
@@ -135,13 +143,12 @@ export default withStyles(styles)(
           <Typography
             style={{
               height: 50,
-              margin: 100
+              margin: 80
             }}
             variant="display1"
             color="inherit"
             id="countdown"
           />
-
           <br />
           <Button
             className={classes.Button}
@@ -162,6 +169,50 @@ export default withStyles(styles)(
             <Autorenew style={{ margin: 5 }} />
             Reset
           </Button>
+          <form
+            noValidate
+            autoComplete="off"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexWrap: 'wrap'
+            }}
+            onSubmit={e => {
+              e.preventDefault();
+              handleChangeTimeManually(this.state.manualTime);
+            }}
+          >
+            <TextField
+              id="time"
+              label="How many minutes?"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Timelapse />
+                  </InputAdornment>
+                )
+              }}
+              style={{ width: 200, marginRight: 100 }}
+              onChange={event => {
+                const value = Number(event.target.value);
+                if (isNaN(value)) {
+                  return;
+                } else {
+                  this.setState({ manualTime: value });
+                }
+              }}
+              margin="normal"
+            />
+            <Button
+              type="submit"
+              color="default"
+              variant="raised"
+              style={{ width: 50 }}
+            >
+              <Done />
+            </Button>
+          </form>
         </Paper>
       );
     }

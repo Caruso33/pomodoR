@@ -39,6 +39,19 @@ class App extends Component {
       selectedIcon: y
     });
   };
+
+  handleChangeTimeManually = time => {
+    this.setState(
+      {
+        currentCountdown: time,
+        selectedIcon: -1
+      },
+      () => {
+        console.log(time, this.state.currentCountdown);
+      }
+    );
+  };
+
   render() {
     const { currentCountdown, selectedIcon } = this.state;
     return (
@@ -46,7 +59,10 @@ class App extends Component {
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <Header />
-          <Countdown currentCountdown={currentCountdown} />
+          <Countdown
+            currentCountdown={currentCountdown}
+            handleChangeTimeManually={this.handleChangeTimeManually}
+          />
           <Footer
             selectedIcon={selectedIcon}
             handleChangeCountdownTime={this.handleChangeCountdownTime}

@@ -43,18 +43,15 @@ export default withStyles(styles)(
       const { tsMin, tsSec } = this.state;
       const { currentCountdown } = this.props;
 
-      const workDeadline =
+      const deadline =
         tsMin === 0 && tsSec === 0
           ? addMinutes(currentCountdown, 0)
           : addMinutes(tsMin, tsSec);
 
       this.setState({
         timerId: countdown(
-          workDeadline,
+          deadline,
           ts => {
-            document.getElementById('countdown').innerHTML = ts.toHTML(
-              'strong'
-            );
             this.progressCountdown(ts);
             this.checkIfFinished();
           },
@@ -63,6 +60,7 @@ export default withStyles(styles)(
         isRunning: true
       });
     };
+
     progressCountdown = ts => {
       const timeLeft = ts.minutes * 60 + ts.seconds;
       const currentCountdownSeconds = this.props.currentCountdown * 60;
@@ -143,12 +141,14 @@ export default withStyles(styles)(
           <Typography
             style={{
               height: 50,
-              margin: 80
+              margin: 20
             }}
             variant="display1"
             color="inherit"
             id="countdown"
-          />
+          >
+            {`${this.state.tsMin}min - ${this.state.tsSec}s`}
+          </Typography>
           <br />
           <Button
             className={classes.Button}

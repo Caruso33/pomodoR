@@ -41,15 +41,10 @@ class App extends Component {
   };
 
   handleChangeTimeManually = time => {
-    this.setState(
-      {
-        currentCountdown: time,
-        selectedIcon: -1
-      },
-      () => {
-        console.log(time, this.state.currentCountdown);
-      }
-    );
+    this.setState({
+      currentCountdown: time,
+      selectedIcon: -1
+    });
   };
 
   render() {

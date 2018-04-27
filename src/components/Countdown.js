@@ -106,18 +106,24 @@ export default withStyles(styles)(
         this.initiateCountdown
       );
     };
-    // static getDerivedStateFromProps(nextState, prevState) {
-    //   if (nextState.currentCountdown !== prevState.currentCountdown) {
-    //     return nextState.currentCountdown;
-    //   } else {
-    //     return null;
-    //   }
-    // }
+
+    componentDidUpdate(prevProps) {
+      if (prevProps.currentCountdown !== this.props.currentCountdown) {
+        this.handleReset();
+      }
+    }
 
     render() {
       const { classes } = this.props;
       return (
-        <Paper style={{ height: '80vh', paddingTop: 84, textAlign: 'center' }}>
+        <Paper
+          style={{
+            height: '80vh',
+            marginTop: 70,
+            paddingTop: 84,
+            textAlign: 'center'
+          }}
+        >
           <CircularProgress
             height={50}
             size={150}
@@ -128,8 +134,8 @@ export default withStyles(styles)(
           />
           <Typography
             style={{
-              height: 50
-              // margin: '150px 0px'
+              height: 50,
+              margin: 100
             }}
             variant="display1"
             color="inherit"

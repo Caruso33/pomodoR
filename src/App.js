@@ -40,14 +40,15 @@ class App extends Component {
     });
   };
   render() {
+    const { currentCountdown, selectedIcon } = this.state;
     return (
       <Fragment>
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <Header />
-          <Countdown currentCountdown={this.state.currentCountdown} />
+          <Countdown currentCountdown={currentCountdown} />
           <Footer
-            selectedIcon={this.state.selectedIcon}
+            selectedIcon={selectedIcon}
             handleChangeCountdownTime={this.handleChangeCountdownTime}
           />
         </MuiThemeProvider>

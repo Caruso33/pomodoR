@@ -18,7 +18,18 @@ const countdown = require('countdown');
 const styles = theme => ({
   Button: {
     margin: 40
-  }
+  },
+  Paper: {
+    marginTop: 70,
+    paddingTop: 84,
+    paddingBottom: 20,
+    textAlign: 'center'
+  },
+  Typography: {
+    height: 50,
+    margin: 20
+  },
+  IconButton: { margin: 5 }
 });
 
 export default withStyles(styles)(
@@ -122,30 +133,21 @@ export default withStyles(styles)(
     render() {
       const { classes, handleChangeTimeManually } = this.props;
       return (
-        <Paper
-          style={{
-            marginTop: 70,
-            paddingTop: 84,
-            paddingBottom: 20,
-            textAlign: 'center'
-          }}
-        >
+        <Paper className={classes.Paper}>
           <CircularProgress
             height={50}
-            size={150}
+            size={250}
             color="secondary"
             variant="static"
-            thickness={2}
+            thickness={1}
             value={this.state.currentPercentage}
           />
           <Typography
-            style={{
-              height: 50,
-              margin: 20
-            }}
+            className={classes.Typography}
             variant="display1"
             color="inherit"
             id="countdown"
+            style={{ position: 'relative', top: 15 }}
           >
             {`${this.state.tsMin}min - ${this.state.tsSec}s`}
           </Typography>
@@ -156,9 +158,9 @@ export default withStyles(styles)(
             color="primary"
             onClick={this.handleStartPause}
           >
-            <PlayArrow style={{ margin: 5 }} />
+            <PlayArrow className={classes.IconButton} />
             Start / Pause
-            <Pause style={{ margin: 5 }} />
+            <Pause className={classes.IconButton} />
           </Button>
           <Button
             className={classes.Button}
@@ -166,7 +168,7 @@ export default withStyles(styles)(
             color="default"
             onClick={this.handleReset}
           >
-            <Autorenew style={{ margin: 5 }} />
+            <Autorenew className={classes.IconButton} />
             Reset
           </Button>
           <form

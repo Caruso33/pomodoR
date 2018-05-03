@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git://github.com/Caruso33/pomodoR.git"
   },
-  "homepage": "caruso33.github.io/pomodoR",
+  "homepage": "https://caruso33.github.io/pomodoR/",
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.42",
     "countdown": "^2.6.0",

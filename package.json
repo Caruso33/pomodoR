@@ -1,11 +1,20 @@
 {
-  "name": "pomodoro",
-  "version": "0.1.0",
+  "name": "react-material-ui-pomodoro-tomatoe-timer",
+  "version": "0.1.2",
   "private": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/Caruso33/pomodoR.git"
   },
+  "keywords": [
+    "react",
+    "material-ui",
+    "material-ui-next",
+    "mui",
+    "pomodoro",
+    "react pomodoro",
+    "tomatoe timer"
+  ],
   "homepage": "https://caruso33.github.io/pomodoR/",
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.43",

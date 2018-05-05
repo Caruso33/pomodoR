@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Beep from '../assets/sound.wav';
-import { Paper, Button, Typography } from 'material-ui';
+import { Paper, Button, Typography, Card, TextField } from 'material-ui';
 import { CircularProgress } from 'material-ui/Progress';
-import TextField from 'material-ui/TextField';
+import { CardContent } from 'material-ui/Card';
 import { InputAdornment } from 'material-ui/Input';
 import { withStyles } from 'material-ui/styles';
 import {
@@ -55,6 +55,13 @@ const styles = theme => ({
     margin: 25,
     '@media screen and (min-width: 600px)': {
       margin: 20
+    }
+  },
+  Card: {
+    maxWidth: 300,
+    margin: '0 auto',
+    '@media screen and (min-width: 600px)': {
+      maxWidth: 500
     }
   }
 });
@@ -122,7 +129,7 @@ export default withStyles(styles)(
 
         this.clearTimer();
         this.setState({
-          reminder: setInterval(() => audio.play(), 1000)
+          reminder: setInterval(() => audio.play(), 60000)
         });
       }
     };
@@ -175,24 +182,29 @@ export default withStyles(styles)(
       const { tsMin, tsSec, reminder } = this.state;
       return (
         <Paper className={classes.Paper}>
-          <CircularProgress
-            height={50}
-            size={250}
-            color="secondary"
-            variant="static"
-            thickness={1}
-            value={this.state.currentPercentage}
-          />
-          <Typography
-            className={classes.Typography}
-            variant="display1"
-            color="inherit"
-            id="countdown"
-          >
-            {reminder === 0
-              ? `${tsMin}min - ${tsSec}s`
-              : `Reminder set to 1min`}
-          </Typography>
+          <Card className={classes.Card}>
+            <CardContent>
+              <CircularProgress
+                height={50}
+                size={250}
+                color="secondary"
+                variant="static"
+                thickness={1}
+                value={this.state.currentPercentage}
+              />
+
+              <Typography
+                className={classes.Typography}
+                variant="display1"
+                color="inherit"
+                id="countdown"
+              >
+                {reminder === 0
+                  ? `${tsMin}min - ${tsSec}s`
+                  : `Reminder set to 1min`}
+              </Typography>
+            </CardContent>
+          </Card>
           <br />
           <Button
             className={classes.Button}

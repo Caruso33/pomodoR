@@ -18,7 +18,7 @@ export default ({ handleChangeCountdownTime, selectedIcon }) => {
     >
       <BottomNavigation
         value={selectedIcon}
-        // onChange={this.handleChange}
+        onChange={this.handleChange}
         showLabels
       >
         <BottomNavigationAction

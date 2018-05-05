@@ -112,43 +112,56 @@ export default withStyles(styles)(
         tsSec: ts.seconds
       }));
     };
-    checkIfFinished = () => {
-      const { tsMin, tsSec } = this.state;
 
-      if (tsMin === 0 && tsSec === 0) {
+    checkIfFinished = () => {
+      const { tsMin, tsSec, isRunning } = this.state;
+
+      if (tsMin === 0 && tsSec === 0 && isRunning === true) {
         const audio = new Audio(Beep);
         audio.play();
-        // this.setState({
-        //   reminder: setInterval(() => audio.play(), 60000)
-        // });
+
+        this.clearTimer();
+        this.setState({
+          reminder: setInterval(() => audio.play(), 1000)
+        });
       }
     };
 
-    handleStartPause = () => {
-      const { timerId, isRunning, reminder } = this.state;
-
-      window.clearInterval(timerId);
-      window.clearInterval(reminder);
-      if (!isRunning) {
-        this.initiateCountdown();
-      }
-      this.setState({
-        isRunning: !isRunning
-      });
-    };
-    handleReset = () => {
-      const { timerId, reminder } = this.state;
-
-      window.clearInterval(timerId);
-      window.clearInterval(reminder);
+    clearTimer = cb => {
+      window.clearInterval(this.state.timerId);
       this.setState(
         {
+          timerId: 0,
           isRunning: false,
           tsMin: 0,
           tsSec: 0
         },
-        this.initiateCountdown
+        cb
       );
+    };
+
+    clearReminder = () => {
+      window.clearInterval(this.state.reminder);
+      this.setState({ reminder: 0 });
+    };
+
+    handleStartPause = () => {
+      const { isRunning } = this.state;
+
+      this.clearReminder();
+      this.clearTimer(() => {
+        if (!isRunning) {
+          this.initiateCountdown();
+        }
+        this.setState(prevState => ({
+          isRunning: !prevState.isRunning
+        }));
+      });
+    };
+
+    handleReset = () => {
+      this.clearReminder();
+      this.clearTimer(this.initiateCountdown);
     };
 
     componentDidUpdate(prevProps) {
@@ -158,7 +171,8 @@ export default withStyles(styles)(
     }
 
     render() {
-      const { classes, handleChangeTimeManually, width } = this.props;
+      const { classes, handleChangeTimeManually } = this.props;
+      const { tsMin, tsSec, reminder } = this.state;
       return (
         <Paper className={classes.Paper}>
           <CircularProgress
@@ -168,22 +182,16 @@ export default withStyles(styles)(
             variant="static"
             thickness={1}
             value={this.state.currentPercentage}
-            style={{
-              position: 'relative',
-              top: 15
-            }}
           />
           <Typography
             className={classes.Typography}
             variant="display1"
             color="inherit"
             id="countdown"
-            style={{
-              position: 'relative',
-              top: 15
-            }}
           >
-            {`${this.state.tsMin}min - ${this.state.tsSec}s`}
+            {reminder === 0
+              ? `${tsMin}min - ${tsSec}s`
+              : `Reminder set to 1min`}
           </Typography>
           <br />
           <Button
@@ -212,13 +220,15 @@ export default withStyles(styles)(
             onSubmit={e => {
               e.preventDefault();
               handleChangeTimeManually(this.state.manualTime);
+              this.setState({ manualTime: 0 });
+              const inputField = document.querySelector('#time');
+              inputField.value = '';
             }}
           >
             <TextField
               id="time"
               label="How many minutes?"
-              xs={12}
-              sm={6}
+              helperText="values between 0 and 60 accepted"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -229,7 +239,7 @@ export default withStyles(styles)(
               className={classes.TextField}
               onChange={event => {
                 const value = Number(event.target.value);
-                if (isNaN(value)) {
+                if (isNaN(value) || value >= 60) {
                   return;
                 } else {
                   this.setState({ manualTime: value });

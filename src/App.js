@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import './App.css';
 import Header from './components/header';
 import Footer from './components/footer';
 import Countdown from './components/Countdown';
 
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import withWidth from 'material-ui/utils/withWidth';
 import CssBaseline from 'material-ui/CssBaseline';
 
 import purple from 'material-ui/colors/purple';
@@ -49,12 +49,14 @@ class App extends Component {
 
   render() {
     const { currentCountdown, selectedIcon } = this.state;
+
     return (
       <Fragment>
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <Header />
           <Countdown
+            width={this.props.width}
             currentCountdown={currentCountdown}
             handleChangeTimeManually={this.handleChangeTimeManually}
           />
@@ -68,4 +70,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withWidth()(App);

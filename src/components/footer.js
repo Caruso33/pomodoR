@@ -2,11 +2,20 @@ import React from 'react';
 import { BottomNavigation, BottomNavigationAction, Paper } from 'material-ui';
 import { Work, FreeBreakfast, Landscape } from '@material-ui/icons';
 
-const styles = {};
+// const styles = {};
 
 export default ({ handleChangeCountdownTime, selectedIcon }) => {
   return (
-    <Paper style={{ padding: '20px 0px' }}>
+    <Paper
+      style={{
+        padding: '20px 0px',
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        height: 96,
+        width: '100%'
+      }}
+    >
       <BottomNavigation
         value={selectedIcon}
         // onChange={this.handleChange}

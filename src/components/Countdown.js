@@ -17,19 +17,46 @@ const countdown = require('countdown');
 
 const styles = theme => ({
   Button: {
-    margin: 40
+    margin: 10,
+    '@media screen and (min-width: 600px)': {
+      margin: 20
+    }
   },
   Paper: {
+    '@media screen and (max-width: 600px)': {
+      marginTop: 60
+    },
     marginTop: 70,
-    paddingTop: 84,
+
+    paddingTop: 30,
     paddingBottom: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    height: '90vh'
   },
   Typography: {
     height: 50,
     margin: 20
   },
-  IconButton: { margin: 5 }
+  IconButton: {
+    margin: 5
+  },
+  Form: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    '@media screen and (min-width: 360px)': {
+      flexDirection: 'row'
+    }
+  },
+  TextField: {
+    width: 200,
+    margin: 25,
+    '@media screen and (min-width: 600px)': {
+      margin: 20
+    }
+  }
 });
 
 export default withStyles(styles)(
@@ -131,7 +158,7 @@ export default withStyles(styles)(
     }
 
     render() {
-      const { classes, handleChangeTimeManually } = this.props;
+      const { classes, handleChangeTimeManually, width } = this.props;
       return (
         <Paper className={classes.Paper}>
           <CircularProgress
@@ -141,13 +168,20 @@ export default withStyles(styles)(
             variant="static"
             thickness={1}
             value={this.state.currentPercentage}
+            style={{
+              position: 'relative',
+              top: 15
+            }}
           />
           <Typography
             className={classes.Typography}
             variant="display1"
             color="inherit"
             id="countdown"
-            style={{ position: 'relative', top: 15 }}
+            style={{
+              position: 'relative',
+              top: 15
+            }}
           >
             {`${this.state.tsMin}min - ${this.state.tsSec}s`}
           </Typography>
@@ -172,14 +206,9 @@ export default withStyles(styles)(
             Reset
           </Button>
           <form
-            noValidate
+            noValidate="noValidate"
             autoComplete="off"
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexWrap: 'wrap'
-            }}
+            className={classes.Form}
             onSubmit={e => {
               e.preventDefault();
               handleChangeTimeManually(this.state.manualTime);
@@ -188,6 +217,8 @@ export default withStyles(styles)(
             <TextField
               id="time"
               label="How many minutes?"
+              xs={12}
+              sm={6}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -195,7 +226,7 @@ export default withStyles(styles)(
                   </InputAdornment>
                 )
               }}
-              style={{ width: 200, marginRight: 100 }}
+              className={classes.TextField}
               onChange={event => {
                 const value = Number(event.target.value);
                 if (isNaN(value)) {
@@ -210,7 +241,7 @@ export default withStyles(styles)(
               type="submit"
               color="default"
               variant="raised"
-              style={{ width: 50 }}
+              className={classes.Button}
             >
               <Done />
             </Button>

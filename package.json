@@ -1,7 +1,7 @@
 {
   "name": "react-material-ui-pomodoro-tomatoe-timer",
-  "version": "0.1.2",
-  "private": true,
+  "version": "0.1.3",
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git://github.com/Caruso33/pomodoR.git"

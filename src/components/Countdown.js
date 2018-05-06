@@ -68,18 +68,15 @@ const styles = theme => ({
 
 export default withStyles(styles)(
   class Countdown extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        isRunning: false,
-        currentPercentage: 100,
-        timerId: 0,
-        reminder: 0,
-        tsMin: 0,
-        tsSec: 0,
-        manualTime: 0
-      };
-    }
+    state = {
+      isRunning: false,
+      currentPercentage: 100,
+      timerId: 0,
+      reminder: 0,
+      tsMin: 0,
+      tsSec: 0,
+      manualTime: 0
+    };
 
     initiateCountdown = () => {
       const addMinutes = (minutes, seconds) =>
@@ -139,9 +136,7 @@ export default withStyles(styles)(
       this.setState(
         {
           timerId: 0,
-          isRunning: false,
-          tsMin: 0,
-          tsSec: 0
+          isRunning: false
         },
         cb
       );
@@ -160,15 +155,20 @@ export default withStyles(styles)(
         if (!isRunning) {
           this.initiateCountdown();
         }
-        this.setState(prevState => ({
-          isRunning: !prevState.isRunning
-        }));
       });
     };
 
     handleReset = () => {
       this.clearReminder();
-      this.clearTimer(this.initiateCountdown);
+      this.clearTimer(() => {
+        this.setState(
+          () => ({
+            tsMin: 0,
+            tsSec: 0
+          }),
+          this.initiateCountdown
+        );
+      });
     };
 
     componentDidUpdate(prevProps) {

@@ -29,9 +29,9 @@ const styles = theme => ({
     marginTop: 70,
 
     paddingTop: 30,
-    paddingBottom: 20,
+    paddingBottom: 96,
     textAlign: 'center',
-    height: '90vh'
+    minHeight: '90vh'
   },
   Typography: {
     height: 50,
@@ -46,6 +46,7 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
+    paddingBottom: 10,
     '@media screen and (min-width: 360px)': {
       flexDirection: 'row'
     }

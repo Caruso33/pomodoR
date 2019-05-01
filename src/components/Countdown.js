@@ -1,37 +1,41 @@
-import React, { Component } from 'react';
-import Beep from '../assets/sound.wav';
-import { Paper, Button, Typography, Card, TextField } from 'material-ui';
-import { CircularProgress } from 'material-ui/Progress';
-import { CardContent } from 'material-ui/Card';
-import { InputAdornment } from 'material-ui/Input';
-import { withStyles } from 'material-ui/styles';
+import React, { Component } from "react";
+import Beep from "../assets/sound.wav";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Card from "@material-ui/core/Card";
+import TextField from "@material-ui/core/TextField";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import CardContent from "@material-ui/core/CardContent";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import { withStyles } from "@material-ui/styles";
 import {
   Autorenew,
   PlayArrow,
   Pause,
   Timelapse,
   Done
-} from '@material-ui/icons';
-
-const countdown = require('countdown');
+} from "@material-ui/icons";
+// import countdown from "countdown";
+const countdown = require("countdown");
 
 const styles = theme => ({
   Button: {
     margin: 10,
-    '@media screen and (min-width: 600px)': {
+    "@media screen and (min-width: 600px)": {
       margin: 20
     }
   },
   Paper: {
-    '@media screen and (max-width: 600px)': {
+    "@media screen and (max-width: 600px)": {
       marginTop: 60
     },
     marginTop: 70,
 
     paddingTop: 30,
     paddingBottom: 96,
-    textAlign: 'center',
-    minHeight: '90vh'
+    textAlign: "center",
+    minHeight: "90vh"
   },
   Typography: {
     height: 50,
@@ -41,27 +45,27 @@ const styles = theme => ({
     margin: 5
   },
   Form: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    flexWrap: "wrap",
     paddingBottom: 10,
-    '@media screen and (min-width: 360px)': {
-      flexDirection: 'row'
+    "@media screen and (min-width: 360px)": {
+      flexDirection: "row"
     }
   },
   TextField: {
     width: 200,
     margin: 25,
-    '@media screen and (min-width: 600px)': {
+    "@media screen and (min-width: 600px)": {
       margin: 20
     }
   },
   Card: {
     maxWidth: 300,
-    margin: '0 auto',
-    '@media screen and (min-width: 600px)': {
+    margin: "0 auto",
+    "@media screen and (min-width: 600px)": {
       maxWidth: 500
     }
   }
@@ -69,6 +73,10 @@ const styles = theme => ({
 
 export default withStyles(styles)(
   class Countdown extends Component {
+    // constructor(props) {
+    //   super(props);
+    //   this.countdown = new countdown()
+    // }
     state = {
       isRunning: false,
       currentPercentage: 100,
@@ -91,6 +99,7 @@ export default withStyles(styles)(
           ? addMinutes(currentCountdown, 0)
           : addMinutes(tsMin, tsSec);
 
+      console.log(countdown);
       this.setState({
         timerId: countdown(
           deadline,
@@ -108,10 +117,10 @@ export default withStyles(styles)(
       const timeLeft = ts.minutes * 60 + ts.seconds;
       const currentCountdownSeconds = this.props.currentCountdown * 60;
 
-      this.setState(({ currentPercentage }) => ({
+      this.setState(() => ({
         currentPercentage:
-          (currentCountdownSeconds - (currentCountdownSeconds - timeLeft)) /
-          currentCountdownSeconds *
+          ((currentCountdownSeconds - (currentCountdownSeconds - timeLeft)) /
+            currentCountdownSeconds) *
           100,
         tsMin: ts.minutes,
         tsSec: ts.seconds
@@ -120,15 +129,14 @@ export default withStyles(styles)(
 
     checkIfFinished = () => {
       const { tsMin, tsSec, isRunning } = this.state;
+      const fiveMin = 50000;
 
       if (tsMin === 0 && tsSec === 0 && isRunning === true) {
         const audio = new Audio(Beep);
         audio.play();
 
         this.clearTimer();
-        this.setState({
-          reminder: setInterval(() => audio.play(), 60000)
-        });
+        this.setState({ reminder: setInterval(() => audio.play(), fiveMin) });
       }
     };
 
@@ -153,22 +161,14 @@ export default withStyles(styles)(
 
       this.clearReminder();
       this.clearTimer(() => {
-        if (!isRunning) {
-          this.initiateCountdown();
-        }
+        if (!isRunning) this.initiateCountdown();
       });
     };
 
     handleReset = () => {
       this.clearReminder();
       this.clearTimer(() => {
-        this.setState(
-          () => ({
-            tsMin: 0,
-            tsSec: 0
-          }),
-          this.initiateCountdown
-        );
+        this.setState(() => ({ tsMin: 0, tsSec: 0 }), this.initiateCountdown);
       });
     };
 
@@ -234,8 +234,8 @@ export default withStyles(styles)(
               e.preventDefault();
               handleChangeTimeManually(this.state.manualTime);
               this.setState({ manualTime: 0 });
-              const inputField = document.querySelector('#time');
-              inputField.value = '';
+              const inputField = document.querySelector("#time");
+              inputField.value = "";
             }}
           >
             <TextField

@@ -1,6 +1,8 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography } from 'material-ui';
-import { Alarm } from '@material-ui/icons';
+import React from "react";
+import { Alarm } from "@material-ui/icons";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 
 export default () => {
   return (
@@ -9,8 +11,8 @@ export default () => {
     >
       <Toolbar
         style={{
-          display: 'flex',
-          justifyContent: 'space-around'
+          display: "flex",
+          justifyContent: "space-around"
         }}
       >
         <Alarm />

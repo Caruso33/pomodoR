@@ -1,14 +1,15 @@
-import React, { Component, Fragment } from 'react';
-import Header from './components/header';
-import Footer from './components/footer';
-import Countdown from './components/Countdown';
+import React, { Component, Fragment } from "react";
+import Header from "./components/header";
+import Footer from "./components/footer";
+import Countdown from "./components/Countdown";
 
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import withWidth from 'material-ui/utils/withWidth';
-import CssBaseline from 'material-ui/CssBaseline';
+// import withWidth from "material-ui/utils/withWidth";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import { createMuiTheme } from "@material-ui/core/styles";
 
-import purple from 'material-ui/colors/purple';
-import green from 'material-ui/colors/green';
+import purple from "@material-ui/core/colors/purple";
+import green from "@material-ui/core/colors/green";
 
 const theme = createMuiTheme({
   palette: {
@@ -72,4 +73,4 @@ class App extends Component {
   }
 }
 
-export default withWidth()(App);
+export default App;

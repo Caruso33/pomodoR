@@ -17,15 +17,13 @@
   ],
   "homepage": "https://caruso33.github.io/pomodoR/",
   "dependencies": {
-    "@material-ui/core": "3.9.3",
-    "@material-ui/icons": "3.0.2",
-    "@material-ui/styles": "3.0.0-alpha.10",
+    "@material-ui/core": "^4.7.1",
+    "@material-ui/icons": "^4.5.1",
+    "@material-ui/styles": "^4.7.1",
     "countdown": "2.6.0",
     "gh-pages": "^2.1.1",
-    "npm": "^6.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-jss": "^8.6.1",
     "react-scripts": "^3.2.0"
   },
   "scripts": {

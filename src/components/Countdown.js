@@ -95,7 +95,6 @@ export default withStyles(styles)(
           ? addMinutes(currentCountdown, 0)
           : addMinutes(tsMin, tsSec);
 
-      console.log(countdown);
       this.setState({
         timerId: countdown(
           deadline,

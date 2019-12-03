@@ -1,6 +1,6 @@
 {
   "name": "react-material-ui-pomodoro-tomatoe-timer",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": false,
   "repository": {
     "type": "git",
@@ -21,12 +21,12 @@
     "@material-ui/icons": "3.0.2",
     "@material-ui/styles": "3.0.0-alpha.10",
     "countdown": "2.6.0",
-    "gh-pages": "^1.1.0",
+    "gh-pages": "^2.1.1",
     "npm": "^6.0.1",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "react-jss": "^8.6.1",
-    "react-scripts": "^1.1.4"
+    "react-scripts": "^3.2.0"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -35,5 +35,17 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

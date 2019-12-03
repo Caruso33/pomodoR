@@ -16,7 +16,7 @@ import {
   Timelapse,
   Done
 } from "@material-ui/icons";
-// import countdown from "countdown";
+
 const countdown = require("countdown");
 
 const styles = theme => ({
@@ -73,10 +73,6 @@ const styles = theme => ({
 
 export default withStyles(styles)(
   class Countdown extends Component {
-    // constructor(props) {
-    //   super(props);
-    //   this.countdown = new countdown()
-    // }
     state = {
       isRunning: false,
       currentPercentage: 100,
@@ -196,7 +192,7 @@ export default withStyles(styles)(
 
               <Typography
                 className={classes.Typography}
-                variant="display1"
+                variant="h4"
                 color="inherit"
                 id="countdown"
               >
@@ -209,7 +205,7 @@ export default withStyles(styles)(
           <br />
           <Button
             className={classes.Button}
-            variant="raised"
+            variant="contained"
             color="primary"
             onClick={this.handleStartPause}
           >
@@ -219,7 +215,7 @@ export default withStyles(styles)(
           </Button>
           <Button
             className={classes.Button}
-            variant="raised"
+            variant="contained"
             color="default"
             onClick={this.handleReset}
           >
@@ -263,7 +259,7 @@ export default withStyles(styles)(
             <Button
               type="submit"
               color="default"
-              variant="raised"
+              variant="contained"
               className={classes.Button}
             >
               <Done />

@@ -1,15 +1,12 @@
-import React, { Component, Fragment } from "react";
-import Header from "./components/header";
-import Footer from "./components/footer";
-import Countdown from "./components/Countdown";
-
-// import withWidth from "material-ui/utils/withWidth";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import { createMuiTheme } from "@material-ui/core/styles";
-
-import purple from "@material-ui/core/colors/purple";
 import green from "@material-ui/core/colors/green";
+import purple from "@material-ui/core/colors/purple";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { createMuiTheme } from "@material-ui/core/styles";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import React, { Component } from "react";
+import Countdown from "./components/Countdown";
+import Footer from "./components/footer";
+import Header from "./components/header";
 
 const theme = createMuiTheme({
   palette: {
@@ -27,13 +24,11 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentCountdown: 25,
-      selectedIcon: 0
-    };
-  }
+  state = {
+    currentCountdown: 25,
+    selectedIcon: 0
+  };
+
   handleChangeCountdownTime = (x, y) => {
     this.setState({
       currentCountdown: x,
@@ -54,21 +49,19 @@ class App extends Component {
     const { currentCountdown, selectedIcon } = this.state;
 
     return (
-      <Fragment>
-        <MuiThemeProvider theme={theme}>
-          <CssBaseline />
-          <Header />
-          <Countdown
-            width={this.props.width}
-            currentCountdown={currentCountdown}
-            handleChangeTimeManually={this.handleChangeTimeManually}
-          />
-          <Footer
-            selectedIcon={selectedIcon}
-            handleChangeCountdownTime={this.handleChangeCountdownTime}
-          />
-        </MuiThemeProvider>
-      </Fragment>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <Header />
+        <Countdown
+          width={this.props.width}
+          currentCountdown={currentCountdown}
+          handleChangeTimeManually={this.handleChangeTimeManually}
+        />
+        <Footer
+          selectedIcon={selectedIcon}
+          handleChangeCountdownTime={this.handleChangeCountdownTime}
+        />
+      </MuiThemeProvider>
     );
   }
 }

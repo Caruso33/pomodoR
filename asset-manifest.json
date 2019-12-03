@@ -1,7 +1,22 @@
 {
-  "main.css": "static/css/main.65027555.css",
-  "main.css.map": "static/css/main.65027555.css.map",
-  "main.js": "static/js/main.d70f6d28.js",
-  "main.js.map": "static/js/main.d70f6d28.js.map",
-  "static/media/sound.wav": "static/media/sound.89820ccd.wav"
+  "files": {
+    "main.css": "/pomodoR/static/css/main.a2b7b0b6.chunk.css",
+    "main.js": "/pomodoR/static/js/main.352fe5f6.chunk.js",
+    "main.js.map": "/pomodoR/static/js/main.352fe5f6.chunk.js.map",
+    "runtime-main.js": "/pomodoR/static/js/runtime-main.eb6ff061.js",
+    "runtime-main.js.map": "/pomodoR/static/js/runtime-main.eb6ff061.js.map",
+    "static/js/2.23c5dcc5.chunk.js": "/pomodoR/static/js/2.23c5dcc5.chunk.js",
+    "static/js/2.23c5dcc5.chunk.js.map": "/pomodoR/static/js/2.23c5dcc5.chunk.js.map",
+    "index.html": "/pomodoR/index.html",
+    "precache-manifest.c3505ca4871ea45cbc3cf3807e6552fa.js": "/pomodoR/precache-manifest.c3505ca4871ea45cbc3cf3807e6552fa.js",
+    "service-worker.js": "/pomodoR/service-worker.js",
+    "static/css/main.a2b7b0b6.chunk.css.map": "/pomodoR/static/css/main.a2b7b0b6.chunk.css.map",
+    "static/media/sound.wav": "/pomodoR/static/media/sound.89820ccd.wav"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.eb6ff061.js",
+    "static/js/2.23c5dcc5.chunk.js",
+    "static/css/main.a2b7b0b6.chunk.css",
+    "static/js/main.352fe5f6.chunk.js"
+  ]
 }
